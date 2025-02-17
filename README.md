@@ -23,7 +23,7 @@ This project is a simple URL shortener built with Node.js, Express.js, EJS, SQLi
 
 1. **Clone the repository:**
    ```bash
-   git clone <https://github.com/tahiry-dev-29/node_app.git>
+   git clone <https://github.com/tahiry-dev-29/url_shortener.git>
    ```
 2. **Install dependencies:**
    ```bash
