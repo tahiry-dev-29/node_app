@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const knex = require('knex');
-const { nanoid } = require('nanoid');
+const nanoidImport = import('nanoid');
 const config = require('./knexfile');
 
 const app = express();
@@ -46,6 +46,7 @@ app.get('/history', async (req, res) => {
 // Générer une URL courte
 app.post('/shorten', async (req, res) => {
    const { longUrl } = req.body;
+   const { nanoid } = await nanoidImport;
    const existingUrl = await db('urls').where({ longUrl }).first();
 
    if (existingUrl) {
