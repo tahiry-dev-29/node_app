@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Raccourcisseur d'URL</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Raccourcir une URL</h1>
+        <form action="/shorten" method="POST">
+            <input type="url" name="longUrl" placeholder="Collez votre URL ici" required>
+            <button type="submit">Raccourcir</button>
+        </form>
+        <% if (typeof shortUrl !=='undefined' && shortUrl) { %>
+            <div class="result">
+                <p>URL courte : <a href="<%= shortUrl %>">
+                        <%= shortUrl %>
+                    </a></p>
+            </div>
+            <% } %>
+    </div>
+</body>
+
+</html>
