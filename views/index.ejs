@@ -1,25 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Raccourcisseur d'URL</title>
-    <link rel="stylesheet" href="/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Raccourcir une URL</h1>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="/history">History</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+
+        <h1>Shorten a URL</h1>
+
         <form action="/shorten" method="POST">
-            <input type="url" name="longUrl" placeholder="Collez votre URL ici" required>
-            <button type="submit">Raccourcir</button>
+            <input type="url" name="longUrl" placeholder="Paste your URL here" required>
+            <button type="submit">Shorten</button>
         </form>
+
         <% if (typeof shortUrl !=='undefined' && shortUrl) { %>
             <div class="result">
-                <p>URL courte : <a href="<%= shortUrl %>">
+                <p>Short URL: <a href="<%= shortUrl %>">
                         <%= shortUrl %>
                     </a></p>
             </div>
             <% } %>
+
+                <% if (history) { %>
+                    <div id="history-container">
+                        <h2>URL History</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Long URL</th>
+                                    <th>Short URL</th>
+                                    <th>Creation Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% history.forEach(url=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= url.longUrl %>
+                                        </td>
+                                        <td><a href="<%= process.env.BASE_URL %>/<%= url.shortCode %>">
+                                                <%= process.env.BASE_URL %>/<%= url.shortCode %>
+                                            </a></td>
+                                        <td>
+                                            <%= url.createdAt %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } %>
     </div>
 </body>
 

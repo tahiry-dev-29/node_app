@@ -14,20 +14,44 @@ app.use(express.static('views'));
 app.set('view engine', 'ejs');
 
 // Page d'accueil
-app.get('/', (req, res) => {
-   res.render('index', { shortUrl: null });
+app.get('/', async (req, res) => {
+   try {
+      const history = await db('urls').select(
+         'longUrl',
+         'shortCode',
+         'createdAt'
+      );
+      res.render('index', { shortUrl: null, history });
+   } catch (error) {
+      console.error('Error fetching history:', error);
+      res.status(500).send('Error fetching history');
+   }
+});
+
+// Affichage des historique
+app.get('/history', async (req, res) => {
+   try {
+      const history = await db('urls').select(
+         'longUrl',
+         'shortCode',
+         'createdAt'
+      );
+      res.render('index', { shortUrl: null, history });
+   } catch (error) {
+      console.error('Error fetching history:', error);
+      res.status(500).send('Error fetching history');
+   }
 });
 
 // Générer une URL courte
 app.post('/shorten', async (req, res) => {
    const { longUrl } = req.body;
-
-   // Vérifier si l'URL existe déjà
    const existingUrl = await db('urls').where({ longUrl }).first();
 
    if (existingUrl) {
       return res.render('index', {
          shortUrl: `${process.env.BASE_URL}/${existingUrl.shortCode}`,
+         history: [],
       });
    }
 
@@ -37,8 +61,8 @@ app.post('/shorten', async (req, res) => {
 
    // Sauvegarder dans SQLite
    await db('urls').insert({ longUrl, shortCode });
-
-   res.render('index', { shortUrl });
+   const history = await db('urls').select('longUrl', 'shortCode', 'createdAt');
+   res.render('index', { shortUrl, history });
 });
 
 // Redirection
