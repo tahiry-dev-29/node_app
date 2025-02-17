@@ -23,11 +23,11 @@ This project is a simple URL shortener built with Node.js, Express.js, EJS, SQLi
 
 1. **Clone the repository:**
    ```bash
-   git clone <https://github.com/tahiry-dev-29/url_shortener.git>
+   git clone https://github.com/tahiry-dev-29/url_shortener.git
    ```
 2. **Install dependencies:**
    ```bash
-   cd url-shortener-sqlite
+   cd url_shortener
    npm install
    ```
 3. **Create a `.env` file:** Copy the example `.env` file and fill in the `PORT` and `BASE_URL` variables. The `BASE_URL` should reflect where your application will be hosted.
